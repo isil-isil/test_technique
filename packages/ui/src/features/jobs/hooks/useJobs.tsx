@@ -21,6 +21,7 @@ export const useJobs = () => {
   const [error, setError] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortByT>("title");
   const [sortOrder, setSortOrder] = useState<SortOrderT>("asc");
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     const getJobs = async () => {
@@ -72,12 +73,22 @@ export const useJobs = () => {
     }
   };
 
+  const searchFn = jobs.filter((job) => {
+    return (
+      job.title.toLocaleLowerCase().includes(search.toLowerCase()) ||
+      job.category.toLocaleLowerCase().includes(search.toLowerCase()) ||
+      job.type.toLocaleLowerCase().includes(search.toLowerCase())
+    );
+  })
+
   return {
-    jobs: jobs.sort(sortFn),
+    jobs: searchFn.sort(sortFn),
     error,
     sortBy,
     setSortBy,
     sortOrder,
     setSortOrder,
+    search,
+    setSearch,
   };
 };
