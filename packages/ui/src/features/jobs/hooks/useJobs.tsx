@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type JobCategory = "it" | "sales" | "managment";
 type JobType = "cdi" | "cdd" | "internship";
@@ -33,6 +33,7 @@ export const useJobs = () => {
 
       if (!response.ok) {
         setError("Erreur de connexion au serveur.");
+        return;
       }
 
       const data = await response.json();
@@ -42,6 +43,19 @@ export const useJobs = () => {
 
     getJobs();
   }, []);
+
+  const filteredAndSortedJobs = useMemo(() => {
+    const filtered = jobs.filter((job) => {
+      if (!search) return true;
+
+      const searchLower = search.toLowerCase();
+      return (
+        job.title.toLocaleLowerCase().includes(searchLower) ||
+        job.category.toLocaleLowerCase().includes(searchLower) ||
+        job.type.toLocaleLowerCase().includes(searchLower)
+        );
+    });
+
 
   const sortFn: (a: Job, b: Job) => number = (a, b) => {
     switch (sortBy) {
@@ -73,16 +87,11 @@ export const useJobs = () => {
     }
   };
 
-  const searchFn = jobs.filter((job) => {
-    return (
-      job.title.toLocaleLowerCase().includes(search.toLowerCase()) ||
-      job.category.toLocaleLowerCase().includes(search.toLowerCase()) ||
-      job.type.toLocaleLowerCase().includes(search.toLowerCase())
-    );
-  })
+  return [...filtered].sort(sortFn);
+},[jobs, search, sortBy, sortOrder]);
 
   return {
-    jobs: searchFn.sort(sortFn),
+    jobs: filteredAndSortedJobs,
     error,
     sortBy,
     setSortBy,

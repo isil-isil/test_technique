@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./JobForm.module.css";
 
 interface JobFormProps {
@@ -14,13 +14,28 @@ interface JobFormProps {
     salary: string;
     type: string;
   }) => void;
+  initialValues?: {
+    title: string;
+    category: string;
+    salary: string;
+    type: string;
+  }
 }
 
-const JobForm: FC<JobFormProps> = ({ onSubmit }) => {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("sales");
-  const [salary, setSalary] = useState("");
-  const [type, setType] = useState("cdi");
+const JobForm: FC<JobFormProps> = ({ onSubmit, initialValues }) => {
+  const [title, setTitle] = useState(initialValues?.title || "");
+  const [category, setCategory] = useState(initialValues?.category || "sales");
+  const [salary, setSalary] = useState(initialValues?.salary || "");
+  const [type, setType] = useState(initialValues?.type || "cdi");
+
+  useEffect(() => {
+    if (initialValues) {
+      setTitle(initialValues.title);
+      setCategory(initialValues.category);
+      setSalary(initialValues.salary);
+      setType(initialValues.type);
+    }
+  }, [initialValues]);
 
   const handleSubmit = () => {
     onSubmit({ title, category, salary, type });

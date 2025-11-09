@@ -23,6 +23,7 @@ export const useAddJob = () => {
       body: JSON.stringify(e),
       headers: {
         "Content-Type": "application/json",
+        "authorization": "ubiquid",
       },
     }).then((response) => {
       if (!response.ok) {
