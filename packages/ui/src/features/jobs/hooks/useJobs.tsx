@@ -65,7 +65,9 @@ export const useJobs = () => {
           : b.type.localeCompare(a.type);
       }
       case "createdAt": {
-        return 1;
+        return sortOrder === "asc"
+          ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       }
     }
   };
