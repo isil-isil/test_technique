@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  align-items: center;
+  border: 2px solid rgb(192, 191, 191);
+  border-radius: 8px;
+  padding: 1rem;
+  background: rgba(255, 255, 255);
+}
+
+.infos {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+
+  width: 100%;
+
+  .title {
+    font-weight: 600;
+  }
+
+  .salary {
+    font-weight: 500;
+  }
+
+  .badge {
+    font-weight: 700;
+    width: max-content;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.6rem;
+    background: rgb(185, 185, 185);
+    border-radius: 8px;
+
+    &.sales {
+      color: rgb(4, 0, 255);
+      background: rgb(4, 0, 255, 0.2);
+    }
+    &.it {
+      color: rgb(45, 184, 45);
+      background: rgb(45, 184, 45, 0.2);
+    }
+    &.managment {
+      color: rgb(99, 13, 99);
+      background: rgb(99, 13, 99, 0.2);
+    }
+    &.cdd {
+      color: rgb(247, 168, 21);
+      background: rgb(247, 168, 21, 0.2);
+    }
+    &.cdi {
+      color: rgb(235, 61, 61);
+      background: rgb(235, 61, 61, 0.2);
+    }
+    &.internship {
+      color: rgb(70, 191, 196);
+      background: rgb(112, 250, 255, 0.2);
+    }
+  }
+}
