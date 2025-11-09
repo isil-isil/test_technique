@@ -24,7 +24,11 @@ export const useJobs = () => {
 
   useEffect(() => {
     const getJobs = async () => {
-      const response = await fetch(URL);
+      const response = await fetch(URL, {
+        headers: {
+          "authorization": "ubiquid",
+        }
+      });
 
       if (!response.ok) {
         setError("Erreur de connexion au serveur.");
